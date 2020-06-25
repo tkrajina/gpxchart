@@ -33,19 +33,20 @@ func panicIfErr(err error) {
 func main() {
 	c := context.Background()
 	var (
-		params       gpxcharts.ChartParams
-		typ          string
-		outputFile   string
-		fontSize     string
-		help         bool
-		size         string
-		padding      string
-		grid         string
-		labels       string
-		chartPadding string
-		imperial     bool
-		debug        bool
-		srtm         bool
+		params           gpxcharts.ChartParams
+		typ              string
+		outputFile       string
+		fontSize         string
+		help             bool
+		size             string
+		padding          string
+		grid             string
+		labels           string
+		chartPadding     string
+		imperial         bool
+		debug            bool
+		srtm             bool
+		smoothElevations bool
 	)
 
 	flag.BoolVar(&help, "help", false, "Help")
@@ -59,6 +60,7 @@ func main() {
 	flag.StringVar(&outputFile, "o", "chart.svg", "Output filename (.png or .svg)")
 	flag.BoolVar(&imperial, "im", false, "Use imperial units (mi, ft)")
 	flag.BoolVar(&srtm, "srtm", false, "Overwrite elevations from SRTM")
+	flag.BoolVar(&smoothElevations, "sme", false, "Smooth elevations")
 	flag.BoolVar(&imperial, "d", false, "Debug")
 	flag.Parse()
 
@@ -117,6 +119,11 @@ func main() {
 
 	if srtm {
 		overwriteElevations(g)
+	}
+	if smoothElevations {
+		for i := 0; i < 4; i++ {
+			g.SmoothVertical()
+		}
 	}
 
 	bytes, err := chartGen(c, params, *g, gpxcharts.OutputExtension(filepath.Ext(outputFile)))

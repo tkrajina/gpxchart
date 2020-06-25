@@ -43,6 +43,12 @@ Usage of gpxchart:
 
 ![Simple](examples/simple.png)
 
+### With smoothed elevations
+
+`gpxchart -o examples/smoothed.png -sme test_files/zbevnica.gpx`
+
+![With smoothed elevations](examples/smoothed.png)
+
 ### With SRTM elevations
 
 `gpxchart -o examples/with_srtm_elevations.png -srtm test_files/zbevnica.gpx`
@@ -96,6 +102,7 @@ Usage of gpxchart:
 `gpxchart -o examples/custom_chart_padding.png -cp 500,50,500,50 test_files/zbevnica.gpx`
 
 ![Custom chart padding](examples/custom_chart_padding.png)
+
 
 
 

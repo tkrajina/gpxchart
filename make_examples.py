@@ -8,6 +8,7 @@ class Cmd:
 
 cmds = [
 	Cmd("simple.png", "Simple", ""),
+	Cmd("smoothed.png", "With smoothed elevations", "-sme"),
 	Cmd("with_srtm_elevations.png", "With SRTM elevations", "-srtm"),
 	Cmd("simple.svg", "SVG output", "-s 200,100"),
 	Cmd("custom_size.png", "Custom size", "-s 900,300"),
