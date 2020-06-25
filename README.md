@@ -43,6 +43,12 @@ Usage of gpxchart:
 
 ![Simple](examples/simple.png)
 
+### With SRTM elevations
+
+`gpxchart -o examples/with_srtm_elevations.png -srtm test_files/zbevnica.gpx`
+
+![With SRTM elevations](examples/with_srtm_elevations.png)
+
 ### SVG output
 
 `gpxchart -o examples/simple.svg -s 200,100 test_files/zbevnica.gpx`
@@ -69,7 +75,7 @@ Usage of gpxchart:
 
 ### Custom font size
 
-`gpxchart -o examples/custom_font_size.png -f 10,20 test_files/zbevnica.gpx`
+`gpxchart -o examples/custom_font_size.png -p 100,20,0,0 -f 10,20 test_files/zbevnica.gpx`
 
 ![Custom font size](examples/custom_font_size.png)
 
@@ -90,8 +96,6 @@ Usage of gpxchart:
 `gpxchart -o examples/custom_chart_padding.png -cp 500,50,500,50 test_files/zbevnica.gpx`
 
 ![Custom chart padding](examples/custom_chart_padding.png)
-
-
 
 
 

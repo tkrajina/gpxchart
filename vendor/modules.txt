@@ -12,6 +12,8 @@ github.com/llgcode/draw2d/draw2dsvg
 github.com/pmezard/go-difflib/difflib
 # github.com/stretchr/testify v1.6.1
 github.com/stretchr/testify/assert
+# github.com/tkrajina/go-elevations v0.0.0-20200416152435-2c9e0bec991f
+github.com/tkrajina/go-elevations/geoelevations
 # github.com/tkrajina/gpxgo v1.0.1
 github.com/tkrajina/gpxgo/gpx
 # golang.org/x/image v0.0.0-20180708004352-c73c2afc3b81

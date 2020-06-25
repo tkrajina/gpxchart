@@ -5,12 +5,14 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
 
+	"github.com/tkrajina/go-elevations/geoelevations"
 	"github.com/tkrajina/gpxchart/gpxcharts"
 	"github.com/tkrajina/gpxgo/gpx"
 )
@@ -43,6 +45,7 @@ func main() {
 		chartPadding string
 		imperial     bool
 		debug        bool
+		srtm         bool
 	)
 
 	flag.BoolVar(&help, "help", false, "Help")
@@ -55,6 +58,7 @@ func main() {
 	flag.StringVar(&typ, "t", string(Elevation), fmt.Sprintf("Type (%s or %s)", Elevation, Speed))
 	flag.StringVar(&outputFile, "o", "chart.svg", "Output filename (.png or .svg)")
 	flag.BoolVar(&imperial, "im", false, "Use imperial units (mi, ft)")
+	flag.BoolVar(&srtm, "srtm", false, "Overwrite elevations from SRTM")
 	flag.BoolVar(&imperial, "d", false, "Debug")
 	flag.Parse()
 
@@ -110,12 +114,39 @@ func main() {
 	if err != nil {
 		panic("Error loading: " + file)
 	}
+
+	if srtm {
+		overwriteElevations(g)
+	}
+
 	bytes, err := chartGen(c, params, *g, gpxcharts.OutputExtension(filepath.Ext(outputFile)))
 	panicIfErr(err)
 	err = ioutil.WriteFile(outputFile, bytes, 0700)
 	panicIfErr(err)
 
 	//cs.ChartSVG()
+}
+
+func overwriteElevations(g *gpx.GPX) error {
+	srtm, err := geoelevations.NewSrtm(http.DefaultClient)
+	if err != nil {
+		return err
+	}
+
+	g.ExecuteOnAllPoints(func(pt *gpx.GPXPoint) {
+		ele, err := srtm.GetElevation(http.DefaultClient, pt.Latitude, pt.Longitude)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Cannot get elevation for %f,%f: %v", pt.Latitude, pt.Longitude, err)
+		}
+		fmt.Printf("Overwriting elevation for %f,%f: %f\n", pt.Latitude, pt.Longitude, ele)
+		pt.Elevation = *gpx.NewNullableFloat64(ele)
+	})
+
+	for i := 0; i < 5; i++ {
+		g.SmoothVertical()
+	}
+
+	return nil
 }
 
 func showHelp() {
