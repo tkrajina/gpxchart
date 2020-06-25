@@ -1,0 +1,23 @@
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
+# github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
+github.com/golang/freetype/raster
+github.com/golang/freetype/truetype
+# github.com/llgcode/draw2d v0.0.0-20200603164053-19660b984a28
+github.com/llgcode/draw2d
+github.com/llgcode/draw2d/draw2dbase
+github.com/llgcode/draw2d/draw2dimg
+github.com/llgcode/draw2d/draw2dsvg
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v1.6.1
+github.com/stretchr/testify/assert
+# github.com/tkrajina/gpxgo v1.0.1
+github.com/tkrajina/gpxgo/gpx
+# golang.org/x/image v0.0.0-20180708004352-c73c2afc3b81
+golang.org/x/image/draw
+golang.org/x/image/font
+golang.org/x/image/math/f64
+golang.org/x/image/math/fixed
+# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+gopkg.in/yaml.v3
