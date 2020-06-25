@@ -11,6 +11,7 @@ cmds = [
 	Cmd("smoothed.png", "With smoothed elevations", "-sme"),
 	Cmd("with_srtm_elevations.png", "With SRTM elevations", "-srtm"),
 	Cmd("simple.svg", "SVG output", "-s 200,100"),
+	Cmd("imperial.png", "Imperial units", "-im"),
 	Cmd("custom_size.png", "Custom size", "-s 900,300"),
 	Cmd("no_padding.png", "No padding", "-p 0,0,0,0"),
 	Cmd("custom_padding.png", "Padding", "-p 50,20,20,20" ),

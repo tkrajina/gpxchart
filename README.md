@@ -4,7 +4,7 @@ A command-line tool and library for elevation charts from GPX files.
 
 ## Installation
 
-Install Golang, and:
+Install Golang and:
 
     go install github.com/tkrajina/gpxchart/cmd/gpxchart/...
 
@@ -37,6 +37,8 @@ Usage of gpxchart:
 
 ## Examples
 
+
+
 ### Simple
 
 `gpxchart -o examples/simple.png  test_files/zbevnica.gpx`
@@ -60,6 +62,12 @@ Usage of gpxchart:
 `gpxchart -o examples/simple.svg -s 200,100 test_files/zbevnica.gpx`
 
 ![SVG output](examples/simple.svg)
+
+### Imperial units
+
+`gpxchart -o examples/imperial.png -im test_files/zbevnica.gpx`
+
+![Imperial units](examples/imperial.png)
 
 ### Custom size
 
