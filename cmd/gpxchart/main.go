@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -17,6 +18,8 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
+const OptsBackupExtension = ".gpxchars_opts"
+
 type GraphType string
 
 const (
@@ -31,6 +34,16 @@ func panicIfErr(err error) {
 }
 
 func main() {
+
+	if len(os.Args) == 2 && strings.HasSuffix(os.Args[1], OptsBackupExtension) {
+		var newArgs []string
+		byts, err := ioutil.ReadFile(os.Args[1])
+		panicIfErr(err)
+		panicIfErr(json.Unmarshal(byts, &newArgs))
+		fmt.Printf("Using options: %s\n", strings.Join(newArgs, " "))
+		os.Args = append([]string{os.Args[0]}, newArgs...)
+	}
+
 	c := context.Background()
 	var (
 		params           gpxcharts.ChartParams
@@ -131,7 +144,11 @@ func main() {
 	err = ioutil.WriteFile(outputFile, bytes, 0700)
 	panicIfErr(err)
 
-	//cs.ChartSVG()
+	byts, err := json.MarshalIndent(os.Args[1:], "", "    ")
+	panicIfErr(err)
+	ioutil.WriteFile(file+OptsBackupExtension, byts, 0700)
+	fmt.Printf("Saved opions file %s\n", file+OptsBackupExtension)
+	fmt.Printf("Saved chart to %s\n", outputFile)
 }
 
 func overwriteElevations(g *gpx.GPX) error {
