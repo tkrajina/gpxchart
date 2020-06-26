@@ -48,7 +48,7 @@ func TestChart(t *testing.T) {
 					if t.Failed() {
 						t.FailNow()
 					}
-					f, err := os.Create(fmt.Sprintf("tmp_chart_%s_%d_%d%s", unit, n, m, output))
+					f, err := os.Create(fmt.Sprintf("../tmp/tmp_chart_%s_%d_%d%s", unit, n, m, output))
 					assert.Nil(t, err)
 					_, err = f.Write(bytes)
 					assert.Nil(t, err)

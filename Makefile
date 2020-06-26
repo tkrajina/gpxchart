@@ -1,10 +1,18 @@
 .PHONY: test
 test: clean
+	mkdir -p tmp
 	go test -v ./...
+
+.PHONY: build
+build: clean test
+	mkdir -p build
+	go build -o build/gpxchart github.com/tkrajina/gpxchart/cmd/gpxchart/...
+	@echo "Binary saved to build/gpxchart"
 
 .PHONY: clean
 clean:
-	-rm gpxcharts/tmp_chart*
+	-rm tmp/tmp_chart*
+	-rm build/*
 
 .PHONY: generate
 generate:
