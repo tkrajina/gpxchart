@@ -9,6 +9,7 @@ class Cmd:
 cmds = [
 	Cmd("simple.png", "Simple", ""),
 	Cmd("smoothed.png", "With smoothed elevations", "-sme"),
+	Cmd("thicker_line.png", "Custom line width", "-lw 2"),
 	Cmd("with_srtm_elevations.png", "With SRTM elevations", "-srtm"),
 	Cmd("simple.svg", "SVG output", "-s 200,100"),
 	Cmd("imperial.png", "Imperial units", "-im"),

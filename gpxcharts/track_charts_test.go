@@ -66,7 +66,7 @@ func testChart(t *testing.T, fileName string, chartFunc func(c context.Context, 
 	}
 
 	params := ChartParams{
-		Padding: Padding{Left: DEFAULT_LEFT_PADDING_PIXELS, Bottom: DEFAULT_BOTTOM_PADDING_PIXELS},
+		ChartMargin: Padding{Left: DEFAULT_LEFT_PADDING_PIXELS, Bottom: DEFAULT_BOTTOM_PADDING_PIXELS},
 		XAxis: Axis{
 			Show:   true,
 			Grid:   500,

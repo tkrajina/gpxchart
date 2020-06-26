@@ -61,13 +61,13 @@ type ChartParams struct {
 	Points        []Point
 	FillColor     color.RGBA
 	Unit          UnitType
+	LineWidth     float64
 
-	Padding Padding
+	ChartMargin  Padding
+	ChartPadding Padding
 
 	MinX, MaxX float64
 	MinY, MaxY float64
-
-	ChartPadding Padding
 
 	invalid bool
 }
@@ -79,7 +79,11 @@ func (cp ChartParams) UnitTypeOrMetric() UnitType {
 	return cp.Unit
 }
 
-func (cp *ChartParams) calcBounds() {
+func (cp *ChartParams) prepare() {
+	if cp.LineWidth <= 0 {
+		cp.LineWidth = 0.5
+	}
+
 	if cp.MinX == 0 && cp.MaxX == 0 {
 		cp.MinX, cp.MaxX = math.MaxFloat64, -math.MaxFloat64
 		for _, p := range cp.Points {
@@ -109,8 +113,8 @@ func (cp *ChartParams) calcBounds() {
 }
 
 func (cp ChartParams) toImgCoords(x, y float64) (float64, float64) {
-	rx := float64(cp.Padding.Left) + float64(cp.Width-int(cp.Padding.Left)-int(cp.Padding.Right))*(x-cp.MinX)/(cp.MaxX-cp.MinX)
-	ry := float64(cp.Height-int(cp.Padding.Bottom)) - float64(cp.Height-int(cp.Padding.Bottom)-int(cp.Padding.Top))*(y-cp.MinY)/(cp.MaxY-cp.MinY)
+	rx := float64(cp.ChartMargin.Left) + float64(cp.Width-int(cp.ChartMargin.Left)-int(cp.ChartMargin.Right))*(x-cp.MinX)/(cp.MaxX-cp.MinX)
+	ry := float64(cp.Height-int(cp.ChartMargin.Bottom)) - float64(cp.Height-int(cp.ChartMargin.Bottom)-int(cp.ChartMargin.Top))*(y-cp.MinY)/(cp.MaxY-cp.MinY)
 	return rx, ry
 }
 
@@ -169,7 +173,7 @@ func (cs ChartService) invalidGraphParams(c context.Context, origParams ChartPar
 		YAxis:     Axis{Show: true},
 		FillColor: origParams.FillColor,
 
-		Padding: origParams.Padding,
+		ChartMargin: origParams.ChartMargin,
 
 		MinX: 0,
 		MinY: 0,
@@ -407,7 +411,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 	gc.Close()
 	gc.FillStroke()
 
-	params.calcBounds()
+	params.prepare()
 	//fmt.Printf("params=%#v\n", params)
 
 	if params.MinX >= params.MaxX {
@@ -437,7 +441,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 			gc.BeginPath()
 			gc.MoveTo(params.toImgCoords(v, params.MinY))
 			gc.SetStrokeColor(color.RGBA{0xE0, 0xE0, 0xE0, 0xff})
-			gc.SetLineWidth(0.5)
+			gc.SetLineWidth(params.LineWidth)
 			gc.LineTo(params.toImgCoords(v, params.MaxY))
 			gc.Close()
 			gc.FillStroke()
@@ -452,7 +456,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 			gc.BeginPath()
 			gc.MoveTo(params.toImgCoords(params.MinX, v))
 			gc.SetStrokeColor(color.RGBA{0xE0, 0xE0, 0xE0, 0xff})
-			gc.SetLineWidth(0.5)
+			gc.SetLineWidth(params.LineWidth)
 			gc.LineTo(params.toImgCoords(params.MaxX, v))
 			gc.Close()
 			gc.FillStroke()
@@ -468,7 +472,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 				gc.MoveTo(params.toImgCoords(x, params.MinY))
 				gc.SetStrokeColor(color.RGBA{0x00, 0x00, 0x00, 0xaf})
 				gc.SetFillColor(color.RGBA{0x10, 0x10, 0x10, 0x40})
-				gc.SetLineWidth(0.5)
+				gc.SetLineWidth(params.LineWidth)
 			}
 
 			switch pn {
@@ -508,7 +512,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 		gc.BeginPath()
 		gc.MoveTo(params.toImgCoords(params.MinX, params.MinY))
 		gc.SetStrokeColor(axisColor)
-		gc.SetLineWidth(0.5)
+		gc.SetLineWidth(params.LineWidth)
 		gc.LineTo(params.toImgCoords(params.MaxX, params.MinY))
 		gc.Close()
 		gc.FillStroke()
@@ -522,7 +526,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 				x, y := params.toImgCoords(v, params.MinY)
 				gc.MoveTo(x, y-3)
 				gc.SetStrokeColor(axisColor)
-				gc.SetLineWidth(0.5)
+				gc.SetLineWidth(params.LineWidth)
 				gc.LineTo(x, y+3)
 				gc.Close()
 				gc.FillStroke()
@@ -548,7 +552,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 		gc.BeginPath()
 		gc.MoveTo(params.toImgCoords(params.MinX, params.MinY))
 		gc.SetStrokeColor(axisColor)
-		gc.SetLineWidth(0.5)
+		gc.SetLineWidth(params.LineWidth)
 		gc.LineTo(params.toImgCoords(params.MinX, params.MaxY))
 		gc.Close()
 		gc.FillStroke()
@@ -565,7 +569,7 @@ func (cs ChartService) renderChart(c context.Context, params ChartParams, gc dra
 				x, y := params.toImgCoords(params.MinX, v)
 				gc.MoveTo(x-3, y)
 				gc.SetStrokeColor(axisColor)
-				gc.SetLineWidth(0.5)
+				gc.SetLineWidth(params.LineWidth)
 				gc.LineTo(x+3, y)
 				gc.Close()
 				gc.FillStroke()

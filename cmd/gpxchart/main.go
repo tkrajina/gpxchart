@@ -75,6 +75,7 @@ func main() {
 	flag.BoolVar(&srtm, "srtm", false, "Overwrite elevations from SRTM")
 	flag.BoolVar(&smoothElevations, "sme", false, "Smooth elevations")
 	flag.BoolVar(&imperial, "d", false, "Debug")
+	flag.Float64Var(&params.LineWidth, "lw", 0.5, "Line width")
 	flag.Parse()
 
 	if help {
@@ -91,7 +92,7 @@ func main() {
 	params.XAxis.Labels, params.YAxis.Labels = twoFloats(labels)
 	params.XAxis.Show = true
 	params.YAxis.Show = true
-	params.Padding = gpxcharts.Padding{
+	params.ChartMargin = gpxcharts.Padding{
 		Top: 0, Right: 0, Bottom: 20, Left: 40,
 	}
 
@@ -100,7 +101,7 @@ func main() {
 		panic(err)
 	}
 
-	params.Padding.Left, params.Padding.Bottom, params.Padding.Right, params.Padding.Top = fourFloats(padding)
+	params.ChartMargin.Left, params.ChartMargin.Bottom, params.ChartMargin.Right, params.ChartMargin.Top = fourFloats(padding)
 	params.ChartPadding.Left, params.ChartPadding.Bottom, params.ChartPadding.Right, params.ChartPadding.Top = fourFloats(chartPadding)
 
 	if debug {
