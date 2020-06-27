@@ -1,0 +1,6 @@
+[
+    "-s",
+    "200,100",
+    "test_files/zbevnica.gpx",
+    "examples/simple.svg"
+]

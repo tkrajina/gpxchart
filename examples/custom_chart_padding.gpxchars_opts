@@ -1,0 +1,6 @@
+[
+    "-cp",
+    "500,50,500,50",
+    "test_files/zbevnica.gpx",
+    "examples/custom_chart_padding.png"
+]

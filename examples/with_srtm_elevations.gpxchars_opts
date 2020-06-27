@@ -1,0 +1,5 @@
+[
+    "-srtm",
+    "test_files/zbevnica.gpx",
+    "examples/with_srtm_elevations.png"
+]

@@ -11,7 +11,10 @@ Install Golang and:
 ## Usage
 
 ```
-Usage of gpxchart:
+pxchart [option] in_file.gpx out_file.png
+gpxchart [option] in_file.gpx out_file.svg
+
+Usage of build/gpxchart:
   -cp string
         Chart padding (left,down,right,up) (default "20,5,20,10")
   -d    Debug
@@ -25,15 +28,33 @@ Usage of gpxchart:
         Use imperial units (mi, ft)
   -l string
         Labels (x,y) (default "0,0")
-  -o string
-        Output filename (.png or .svg) (default "chart.svg")
+  -lw float
+        Line width (default 0.5)
   -p string
         Padding (left,down,right,up) (default "40,20,0,0")
   -s string
         Size (width,height) (default "900,200")
+  -sme
+        Smooth elevations
+  -srtm
+        Overwrite elevations from SRTM
   -t string
         Type (elevation or speed) (default "elevation")
 ```
+
+Every time you run gpxcharts, it will save the resulting image and a file ending with `.gpxchars_opts`.
+That file contains all the parameters used to generate it.
+
+      $ gpxchart -f 20,10 zbevnica.gpx zbevnica.png
+      Saved opions file zbevnica.gpxchars_opts
+      Saved chart to zbevnica.png
+
+You can edit that file and/or use it to re-generate the image:
+
+      $ gpxchart zbevnica.gpxchars_opts 
+      Using options: -f 20,10 zbevnica.gpx zbevnica.png
+      Saved opions file zbevnica.gpxchars_opts
+      Saved chart to zbevnica.png
 
 ## Examples
 
@@ -41,81 +62,82 @@ Usage of gpxchart:
 
 ### Simple
 
-`gpxchart -o examples/simple.png  test_files/zbevnica.gpx`
+`gpxchart  test_files/zbevnica.gpx examples/simple.png`
 
 ![Simple](examples/simple.png)
 
 ### With smoothed elevations
 
-`gpxchart -o examples/smoothed.png -sme test_files/zbevnica.gpx`
+`gpxchart -sme test_files/zbevnica.gpx examples/smoothed.png`
 
 ![With smoothed elevations](examples/smoothed.png)
 
-### Custom line width
-
-`gpxchart -o examples/thicker_line.png -lw 2 test_files/zbevnica.gpx`
-
-![Custom line width](examples/thicker_line.png)
-
 ### With SRTM elevations
 
-`gpxchart -o examples/with_srtm_elevations.png -srtm test_files/zbevnica.gpx`
+`gpxchart -srtm test_files/zbevnica.gpx examples/with_srtm_elevations.png`
 
 ![With SRTM elevations](examples/with_srtm_elevations.png)
 
 ### SVG output
 
-`gpxchart -o examples/simple.svg -s 200,100 test_files/zbevnica.gpx`
+`gpxchart -s 200,100 test_files/zbevnica.gpx examples/simple.svg`
 
 ![SVG output](examples/simple.svg)
 
 ### Imperial units
 
-`gpxchart -o examples/imperial.png -im test_files/zbevnica.gpx`
+`gpxchart -im test_files/zbevnica.gpx examples/imperial.png`
 
 ![Imperial units](examples/imperial.png)
 
 ### Custom size
 
-`gpxchart -o examples/custom_size.png -s 900,300 test_files/zbevnica.gpx`
+`gpxchart -s 900,300 test_files/zbevnica.gpx examples/custom_size.png`
 
 ![Custom size](examples/custom_size.png)
 
+### Custom line width
+
+`gpxchart -lw 2 test_files/zbevnica.gpx examples/thicker_line.png`
+
+![Custom line width](examples/thicker_line.png)
+
 ### No padding
 
-`gpxchart -o examples/no_padding.png -p 0,0,0,0 test_files/zbevnica.gpx`
+`gpxchart -p 0,0,0,0 test_files/zbevnica.gpx examples/no_padding.png`
 
 ![No padding](examples/no_padding.png)
 
 ### Padding
 
-`gpxchart -o examples/custom_padding.png -p 50,20,20,20 test_files/zbevnica.gpx`
+`gpxchart -p 50,20,20,20 test_files/zbevnica.gpx examples/custom_padding.png`
 
 ![Padding](examples/custom_padding.png)
 
 ### Custom font size
 
-`gpxchart -o examples/custom_font_size.png -p 100,20,0,0 -f 10,20 test_files/zbevnica.gpx`
+`gpxchart -p 100,20,0,0 -f 10,20 test_files/zbevnica.gpx examples/custom_font_size.png`
 
 ![Custom font size](examples/custom_font_size.png)
 
 ### Custom grid
 
-`gpxchart -o examples/custom_grid.png -g 50,20 test_files/zbevnica.gpx`
+`gpxchart -g 50,20 test_files/zbevnica.gpx examples/custom_grid.png`
 
 ![Custom grid](examples/custom_grid.png)
 
 ### Custom labels
 
-`gpxchart -o examples/custom_labels.png -l 250,20 test_files/zbevnica.gpx`
+`gpxchart -l 250,20 test_files/zbevnica.gpx examples/custom_labels.png`
 
 ![Custom labels](examples/custom_labels.png)
 
 ### Custom chart padding
 
-`gpxchart -o examples/custom_chart_padding.png -cp 500,50,500,50 test_files/zbevnica.gpx`
+`gpxchart -cp 500,50,500,50 test_files/zbevnica.gpx examples/custom_chart_padding.png`
 
 ![Custom chart padding](examples/custom_chart_padding.png)
+
 
 
 

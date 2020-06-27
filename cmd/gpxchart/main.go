@@ -48,7 +48,6 @@ func main() {
 	var (
 		params           gpxcharts.ChartParams
 		typ              string
-		outputFile       string
 		fontSize         string
 		help             bool
 		size             string
@@ -70,7 +69,6 @@ func main() {
 	flag.StringVar(&chartPadding, "cp", "20,5,20,10", "Chart padding (left,down,right,up)")
 	flag.StringVar(&fontSize, "f", "8,8", "Both axes font size (x,y)")
 	flag.StringVar(&typ, "t", string(Elevation), fmt.Sprintf("Type (%s or %s)", Elevation, Speed))
-	flag.StringVar(&outputFile, "o", "chart.svg", "Output filename (.png or .svg)")
 	flag.BoolVar(&imperial, "im", false, "Use imperial units (mi, ft)")
 	flag.BoolVar(&srtm, "srtm", false, "Overwrite elevations from SRTM")
 	flag.BoolVar(&smoothElevations, "sme", false, "Smooth elevations")
@@ -117,16 +115,16 @@ func main() {
 		showHelpAndExit(1)
 	}
 
-	if len(flag.Args()) != 1 {
-		fmt.Printf("Expected one file, found: %d\n", len(flag.Args()))
+	if len(flag.Args()) != 2 {
 		showHelpAndExit(1)
 	}
 
-	file := flag.Args()[0]
-	g, err := gpx.ParseFile(file)
+	gpxFile := flag.Args()[0]
+	g, err := gpx.ParseFile(gpxFile)
 	if err != nil {
-		panic("Error loading: " + file)
+		panic("Error loading: " + gpxFile)
 	}
+	outFile := flag.Args()[1]
 
 	if srtm {
 		overwriteElevations(g)
@@ -137,16 +135,18 @@ func main() {
 		}
 	}
 
-	bytes, err := chartGen(c, params, *g, gpxcharts.OutputExtension(filepath.Ext(outputFile)))
+	bytes, err := chartGen(c, params, *g, gpxcharts.OutputExtension(filepath.Ext(outFile)))
 	panicIfErr(err)
-	err = ioutil.WriteFile(outputFile, bytes, 0700)
+	err = ioutil.WriteFile(outFile, bytes, 0700)
 	panicIfErr(err)
 
 	byts, err := json.MarshalIndent(os.Args[1:], "", "    ")
 	panicIfErr(err)
-	ioutil.WriteFile(file+OptsBackupExtension, byts, 0700)
-	fmt.Printf("Saved opions file %s\n", file+OptsBackupExtension)
-	fmt.Printf("Saved chart to %s\n", outputFile)
+	optionsFile := outFile[0:len(outFile)-len(filepath.Ext(outFile))] + OptsBackupExtension
+	ioutil.WriteFile(optionsFile, byts, 0700)
+
+	fmt.Printf("Saved opions file %s\n", optionsFile)
+	fmt.Printf("Saved chart to %s\n", outFile)
 }
 
 func overwriteElevations(g *gpx.GPX) error {
@@ -173,8 +173,10 @@ func overwriteElevations(g *gpx.GPX) error {
 
 func showHelpAndExit(code int) {
 	fmt.Println()
-	flag.Usage()
+	fmt.Println("gpxchart [options] in_file.gpx out_file.png")
+	fmt.Println("gpxchart [options] in_file.gpx out_file.svg")
 	fmt.Println()
+	flag.Usage()
 	os.Exit(code)
 }
 

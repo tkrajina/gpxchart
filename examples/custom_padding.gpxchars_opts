@@ -1,0 +1,6 @@
+[
+    "-p",
+    "50,20,20,20",
+    "test_files/zbevnica.gpx",
+    "examples/custom_padding.png"
+]

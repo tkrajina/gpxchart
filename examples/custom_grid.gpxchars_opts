@@ -1,0 +1,6 @@
+[
+    "-g",
+    "50,20",
+    "test_files/zbevnica.gpx",
+    "examples/custom_grid.png"
+]

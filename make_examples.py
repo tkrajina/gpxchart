@@ -9,11 +9,11 @@ class Cmd:
 cmds = [
 	Cmd("simple.png", "Simple", ""),
 	Cmd("smoothed.png", "With smoothed elevations", "-sme"),
-	Cmd("thicker_line.png", "Custom line width", "-lw 2"),
 	Cmd("with_srtm_elevations.png", "With SRTM elevations", "-srtm"),
 	Cmd("simple.svg", "SVG output", "-s 200,100"),
 	Cmd("imperial.png", "Imperial units", "-im"),
 	Cmd("custom_size.png", "Custom size", "-s 900,300"),
+	Cmd("thicker_line.png", "Custom line width", "-lw 2"),
 	Cmd("no_padding.png", "No padding", "-p 0,0,0,0"),
 	Cmd("custom_padding.png", "Padding", "-p 50,20,20,20" ),
 	Cmd("custom_font_size.png", "Custom font size", "-p 100,20,0,0 -f 10,20"),
@@ -24,7 +24,7 @@ cmds = [
 
 
 for cmd in cmds:
-	command = f"gpxchart -o examples/{cmd.output_file} {cmd.params} test_files/zbevnica.gpx"
+	command = f"gpxchart {cmd.params} test_files/zbevnica.gpx examples/{cmd.output_file}"
 	subprocess.check_output(command.replace("  ", " ").split(" "))
 	print(f"### {cmd.description}\n")
 	print(f"`{command}`\n")

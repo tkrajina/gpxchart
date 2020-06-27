@@ -1,0 +1,6 @@
+[
+    "-p",
+    "0,0,0,0",
+    "test_files/zbevnica.gpx",
+    "examples/no_padding.png"
+]

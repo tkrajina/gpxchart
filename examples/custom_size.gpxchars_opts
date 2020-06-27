@@ -1,0 +1,6 @@
+[
+    "-s",
+    "900,300",
+    "test_files/zbevnica.gpx",
+    "examples/custom_size.png"
+]

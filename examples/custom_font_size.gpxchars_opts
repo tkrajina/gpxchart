@@ -1,0 +1,8 @@
+[
+    "-p",
+    "100,20,0,0",
+    "-f",
+    "10,20",
+    "test_files/zbevnica.gpx",
+    "examples/custom_font_size.png"
+]

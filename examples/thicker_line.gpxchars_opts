@@ -1,0 +1,6 @@
+[
+    "-lw",
+    "2",
+    "test_files/zbevnica.gpx",
+    "examples/thicker_line.png"
+]
