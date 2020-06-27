@@ -14,7 +14,7 @@ Install Golang and:
 pxchart [option] in_file.gpx out_file.png
 gpxchart [option] in_file.gpx out_file.svg
 
-Usage of build/gpxchart:
+Usage of gpxchart:
   -cp string
         Chart padding (left,down,right,up) (default "20,5,20,10")
   -d    Debug
