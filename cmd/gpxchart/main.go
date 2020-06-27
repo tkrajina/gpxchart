@@ -79,8 +79,7 @@ func main() {
 	flag.Parse()
 
 	if help {
-		showHelp()
-		return
+		showHelpAndExit(0)
 	}
 
 	if imperial {
@@ -115,14 +114,12 @@ func main() {
 	case Speed:
 		chartGen = cs.SpeedChart
 	default:
-		showHelp()
-		os.Exit(1)
+		showHelpAndExit(1)
 	}
 
 	if len(flag.Args()) != 1 {
 		fmt.Printf("Expected one file, found: %d\n", len(flag.Args()))
-		showHelp()
-		os.Exit(1)
+		showHelpAndExit(1)
 	}
 
 	file := flag.Args()[0]
@@ -174,10 +171,11 @@ func overwriteElevations(g *gpx.GPX) error {
 	return nil
 }
 
-func showHelp() {
+func showHelpAndExit(code int) {
 	fmt.Println()
 	flag.Usage()
 	fmt.Println()
+	os.Exit(code)
 }
 
 func prepareFont() string {
