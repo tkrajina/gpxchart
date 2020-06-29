@@ -127,7 +127,7 @@ func main() {
 	outFile := flag.Args()[1]
 
 	if srtm {
-		overwriteElevations(g)
+		panicIfErr(overwriteElevations(g))
 	}
 	if smoothElevations {
 		for i := 0; i < 4; i++ {
@@ -143,7 +143,7 @@ func main() {
 	byts, err := json.MarshalIndent(os.Args[1:], "", "    ")
 	panicIfErr(err)
 	optionsFile := outFile[0:len(outFile)-len(filepath.Ext(outFile))] + OptsBackupExtension
-	ioutil.WriteFile(optionsFile, byts, 0700)
+	panicIfErr(ioutil.WriteFile(optionsFile, byts, 0700))
 
 	fmt.Printf("Saved opions file %s\n", optionsFile)
 	fmt.Printf("Saved chart to %s\n", outFile)
