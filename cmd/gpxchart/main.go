@@ -18,7 +18,7 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
-const OptsBackupExtension = ".gpxchars_opts"
+const OptsBackupExtension = ".gpxcharts_opts"
 
 type GraphType string
 

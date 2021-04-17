@@ -6,7 +6,7 @@ A command-line tool and library for elevation charts from GPX files.
 
 Install Golang and:
 
-    go install github.com/tkrajina/gpxchart/cmd/gpxchart/...
+    go install github.com/tkrajina/gpxchart/cmd/gpxchart@latest
 
 ## Usage
 
@@ -42,18 +42,18 @@ Usage of gpxchart:
         Type (elevation or speed) (default "elevation")
 ```
 
-Every time you run gpxcharts, it will save the resulting image and a file ending with `.gpxchars_opts`.
+Every time you run gpxcharts, it will save the resulting image and a file ending with `.gpxcharts_opts`.
 That file contains all the parameters used to generate it.
 
       $ gpxchart -f 20,10 zbevnica.gpx zbevnica.png
-      Saved opions file zbevnica.gpxchars_opts
+      Saved opions file zbevnica.gpxcharts_opts
       Saved chart to zbevnica.png
 
 You can edit that file and/or use it to re-generate the image:
 
-      $ gpxchart zbevnica.gpxchars_opts 
+      $ gpxchart zbevnica.gpxcharts_opts 
       Using options: -f 20,10 zbevnica.gpx zbevnica.png
-      Saved opions file zbevnica.gpxchars_opts
+      Saved opions file zbevnica.gpxcharts_opts
       Saved chart to zbevnica.png
 
 ## Examples
